@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+             xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy"
+             xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://een.com/ver10/indicator/wsdl" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://een.com/ver10/indicator/wsdl"
+             name="IndicatorControllerService">
+    <types>
+        <xsd:schema>
+            <xsd:import namespace="http://een.com/ver10/indicator/wsdl" schemaLocation="indicator.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="GetIndicator">
+        <part name="parameters" element="tns:GetIndicator"/>
+    </message>
+    <message name="GetIndicatorResponse">
+        <part name="parameters" element="tns:GetIndicatorResponse"/>
+    </message>
+    <message name="GetIndicators">
+        <part name="parameters" element="tns:GetIndicators"/>
+    </message>
+    <message name="GetIndicatorsResponse">
+        <part name="parameters" element="tns:GetIndicatorsResponse"/>
+    </message>
+    <message name="SetIndicator">
+        <part name="parameters" element="tns:SetIndicator"/>
+    </message>
+    <message name="SetIndicatorResponse">
+        <part name="parameters" element="tns:SetIndicatorResponse"/>
+    </message>
+    <portType name="Indicator">
+        <operation name="GetIndicator">
+            <input wsam:Action="http://een.com/ver10/indicator/wsdl/GetIndicator" message="tns:GetIndicator"/>
+            <output wsam:Action="http://een.com/ver10/indicator/wsdl/Indicator/GetIndicatorResponse" message="tns:GetIndicatorResponse"/>
+        </operation>
+        <operation name="GetIndicators">
+            <input wsam:Action="http://een.com/ver10/indicator/wsdl/GetIndicators" message="tns:GetIndicators"/>
+            <output wsam:Action="http://een.com/ver10/indicator/wsdl/Indicator/GetIndicatorsResponse" message="tns:GetIndicatorsResponse"/>
+        </operation>
+        <operation name="SetIndicator">
+            <input wsam:Action="http://een.com/ver10/indicator/wsdl/SetIndicator" message="tns:SetIndicator"/>
+            <output wsam:Action="http://een.com/ver10/indicator/wsdl/Indicator/SetIndicatorResponse" message="tns:SetIndicatorResponse"/>
+        </operation>
+    </portType>
+    <binding name="IndicatorPortBinding" type="tns:Indicator">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="GetIndicator">
+            <soap:operation soapAction="http://een.com/ver10/indicator/wsdl/GetIndicator"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetIndicators">
+            <soap:operation soapAction="http://een.com/ver10/indicator/wsdl/GetIndicators"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="SetIndicator">
+            <soap:operation soapAction="http://een.com/ver10/indicator/wsdl/SetIndicator"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="IndicatorControllerService">
+        <port name="IndicatorPort" binding="tns:IndicatorPortBinding" />
+    </service>
+</definitions>

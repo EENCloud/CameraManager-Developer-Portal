@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://een.com/wsdl/ver10/edgestorage/schema"
+           xmlns:escs="http://een.com/wsdl/ver10/edgestorage/schema"
+           elementFormDefault="qualified">
+	<!-- ======================================== -->
+	<!-- Best practices followed in this document -->
+	<!-- Element and Attribute names use Upper Camel Case (UCC) e.g. PostalAddress                                     -->
+	<!-- Enumerations use names not numbers and the values use UCC except when it is an acronym according to Wikipedia -->
+	<!-- ======================================== -->
+
+	<!-- =============================== -->
+	<!--           Capabilities          -->
+	<!-- =============================== -->
+	<xs:complexType name="CapabilitiesType">
+		<xs:sequence>
+			<xs:element name="RecordingConfigCapabilities" type="escs:RecordingConfigCapabilitiesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Capabilities related to configuring recording on edge storage</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="FormatEdgeStorage" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Indicates support for edge storage format method. Depending on the storage type formatting might not be needed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="StartEdgeStorageEventRecording" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Indicates support for triggering an event recording via StartEdgeStorageEventRecording method.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:anyAttribute processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="RecordingConfigCapabilitiesType">
+		<xs:attribute name="RecordingPolicy" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Indicates if configuration of recording policy e.g. rotation, is available in SetEdgeStorageRecordingConfig method</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RecordingTypesCapabilities">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates which recording types are supported. The list may contain one or more enumeration values of escs:RecordingTypesCapabilitiesType
+				</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:list itemType="escs:RecordingTypesCapabilitiesType"/>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="PreRecordingDuration" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>
+                    Indicates if it is possible to configure the duration of the pre-event part of a recording. This part is the video stream that is
+                    generated before the event part of the recording.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PostRecordingDuration" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>
+                    Indicates if it is possible to configure the duration of the post-event part of a recording. This part is the video stream that is
+                    generated after the event part of the recording.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RecordingDuration" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>
+                    Indicates if it is possible to configure the duration of the event part of a recording. This part is the video containing the actual
+                    event. Check escs:EventTypesType for a list of possible events.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="EventTypes">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates which event types can be configured to trigger an event based recording. The list may contain one or more enumeration values of escs:EventTypesType
+				</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:list itemType="escs:EventTypesType"/>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:anyAttribute processContents="lax"/>
+	</xs:complexType>
+    <xs:simpleType name="RecordingTypesCapabilitiesType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Continuous"/>
+            <xs:enumeration value="EventBased"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- =============================== -->
+    <!--          RecordingConfig        -->
+    <!-- =============================== -->
+	<xs:simpleType name="EventTypesType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Audio"/>
+			<xs:enumeration value="PIR"/>
+			<xs:enumeration value="VMD"/>
+			<xs:enumeration value="ApiTriggered"/>
+		</xs:restriction>
+	</xs:simpleType>
+    <xs:complexType name="RecordingConfigType">
+        <xs:sequence>
+            <xs:element name="RecordingConfig" type="escs:RecordingConfig"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecordingConfigTypeResults">
+        <xs:sequence>
+            <xs:element name="RecordingConfig" type="escs:RecordingConfig" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>A RecordingConfig structure for each recording configuration found.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecordingConfig">
+        <xs:sequence>
+            <xs:element name="StorageName" type="escs:StorageNameType"/>
+            <xs:element name="RecordingEnabled" type="xs:boolean"/>
+            <xs:element name="RecordingPolicy" type="escs:RecordingPolicyType"/>
+            <xs:element name="RecordingTypes" type="escs:RecordingTypeType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecordingTypeType">
+        <xs:sequence>
+            <xs:element name="Continuous" type="escs:ContinuousRecordingType" minOccurs="0"/>
+            <xs:element name="EventBased" type="escs:EventBasedRecordingType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ContinuousRecordingType">
+        <!-- this makes the type extensible in the future -->
+        <xs:sequence>
+            <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <!-- this makes sure attributes can be defined later -->
+        <xs:anyAttribute processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="EventBasedRecordingType">
+        <xs:sequence>
+            <xs:element name="EventBasedType" type="escs:EventBasedType" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>An EventBasedType structure for each event type configuration</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- this makes the type extensible in the future -->
+            <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <!-- this makes sure attributes can be defined later -->
+        <xs:anyAttribute processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="EventBasedType">
+        <xs:attribute name="Name" type="escs:EventTypesType"/>
+        <xs:attribute name="PreRecordingDuration" type="xs:int"/>
+        <xs:attribute name="PostRecordingDuration" type="xs:int"/>
+        <xs:attribute name="RecordingDuration" type="xs:int"/>
+        <!-- this makes sure attributes can be defined later -->
+        <xs:anyAttribute processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="RecordingPolicyType">
+        <xs:sequence>
+            <xs:element name="Rotation" type="escs:RotationType"/>
+            <xs:element name="RotationDays" type="escs:RotationDaysType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="RotationDaysType">
+        <xs:annotation><xs:documentation>
+            This field is mandatory if escs:RotationType chosen is "Daily"
+        </xs:documentation></xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RotationType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Daily">
+                <xs:annotation><xs:documentation>
+                    All recordings in the storage created more than X days before will be deleted. X is the amount of days defined in the "RotationDays"
+                    element.
+                </xs:documentation></xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DiskSize">
+                <xs:annotation><xs:documentation>
+                    The oldest recordings in storage are deleted when new space is made available for new recordings. The amount of space cleared with this
+                    policy varies per manufacturer.
+                </xs:documentation></xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================== -->
+	<!--          Storage status         -->
+	<!-- =============================== -->
+    <xs:complexType name="StorageLocationsType">
+        <xs:sequence>
+            <xs:element name="StorageLocation" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Details on the storage location</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="StorageName" type="xs:string" use="required"/>
+                            <xs:attribute name="StorageType" type="escs:StorageTypeType" use="required"/>
+                            <xs:attribute name="State" type="escs:StateType" use="required"/>
+                            <xs:attribute name="SubState" type="escs:SubStateType" use="required"/>
+                            <xs:attribute name="FileSystem" type="escs:FileSystemType"/>
+                            <xs:attribute name="SizeTotal" type="xs:unsignedLong"/>
+                            <xs:attribute name="SizeInUse" type="xs:unsignedLong"/>
+                            <xs:attribute name="Encrypted" type="xs:boolean"/>
+                            <xs:attribute name="StorageHealth" type="escs:StorageHealthType"/>
+                            <xs:attribute name="StorageBrand">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="64"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                            <xs:attribute name="StorageModel">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="64"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+	<!-- =============================== -->
+	<xs:simpleType name="StorageTypeType">
+		<xs:annotation>
+			<xs:documentation>Possible types of storage locations</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SDCard"/>
+			<xs:enumeration value="HDD"/>
+			<xs:enumeration value="NAND">
+				<xs:annotation>
+					<xs:documentation>
+						An electronic solid-state non-volatile memory storage medium built on PCB
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+            <xs:enumeration value="NAS">
+                <xs:annotation>
+                    <xs:documentation>
+                        Identifies a network attached storage
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+	<!-- =============================== -->
+	<xs:simpleType name="StateType">
+		<xs:annotation>
+			<xs:documentation>Defines if the storage is seen by the device and can be used or not. See the state diagram in the API specification document to know how the transition between two states happens.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NotDetected"/>
+			<xs:enumeration value="Detected"/>
+			<xs:enumeration value="Busy"/>
+			<xs:enumeration value="Ready"/>
+			<xs:enumeration value="Error"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- =============================== -->
+	<xs:simpleType name="SubStateType">
+		<xs:annotation>
+			<xs:documentation>
+                A list of codes further explaining the value returned in field escs:State. For instance, to
+                provide the reason of an error state.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ReadOnly"/>
+			<xs:enumeration value="NotFormatted"/>
+			<xs:enumeration value="BadCredentials"/>
+			<xs:enumeration value="UnknownHost"/>
+			<xs:enumeration value="HardwareError"/>
+            <xs:enumeration value="Unknown"/>
+            <xs:enumeration value="None"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- =============================== -->
+	<xs:simpleType name="FileSystemType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ext3"/>
+			<xs:enumeration value="ext4"/>
+			<xs:enumeration value="FAT32"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- =============================== -->
+	<xs:simpleType name="StorageHealthType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="NotOK"/>
+			<xs:enumeration value="Unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- =============================== -->
+    <xs:simpleType name="StorageNameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+</xs:schema>

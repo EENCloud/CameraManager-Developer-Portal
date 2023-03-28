@@ -1,0 +1,48 @@
+<xs:schema xmlns:tns="http://een.com/ver10/mcd/wsdl"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+           targetNamespace="http://een.com/ver10/mcd/wsdl"
+           elementFormDefault="qualified">
+    <xs:element name="GetChannelConfigurations" type="tns:GetChannelConfigurations"/>
+    <xs:element name="GetChannelConfigurationsResponse" type="tns:GetChannelConfigurationsResponse"/>
+    <xs:complexType name="GetChannelConfigurations">
+        <xs:sequence/>
+    </xs:complexType>
+    <xs:complexType name="GetChannelConfigurationsResponse">
+        <xs:sequence>
+            <xs:element name="ChannelConfiguration" type="tns:ChannelConfiguration" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ChannelConfiguration">
+        <xs:sequence>
+            <xs:element name="ChannelType" type="tns:ChannelType"/>
+            <xs:element name="ConnectionStatus" type="tns:ConnectionStatus"/>
+            <xs:element name="DeviceModel" type="xs:string" minOccurs="0"/>
+            <xs:element name="Profiles" type="tns:Profiles"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Profiles">
+        <xs:sequence>
+            <xs:element name="Profile" type="tns:Profile" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Profile">
+        <xs:sequence/>
+        <xs:attribute name="token" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:simpleType name="ChannelType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="IP"/>
+            <xs:enumeration value="Analog"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ConnectionStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Disconnected"/>
+            <xs:enumeration value="Connected"/>
+            <xs:enumeration value="NotConfigured"/>
+            <xs:enumeration value="Unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

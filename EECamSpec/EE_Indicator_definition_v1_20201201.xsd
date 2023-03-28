@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://een.com/ver10/indicator/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           version="1.0" targetNamespace="http://een.com/ver10/indicator/wsdl">
+    <xs:element name="GetIndicator" type="tns:GetIndicator"/>
+    <xs:element name="GetIndicatorResponse" type="tns:GetIndicatorResponse"/>
+    <xs:element name="GetIndicators" type="tns:GetIndicators"/>
+    <xs:element name="GetIndicatorsResponse" type="tns:GetIndicatorsResponse"/>
+    <xs:element name="SetIndicator" type="tns:SetIndicator"/>
+    <xs:element name="SetIndicatorResponse" type="tns:SetIndicatorResponse"/>
+    <xs:complexType name="GetIndicator">
+        <xs:sequence>
+            <xs:element name="IndicatorToken" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GetIndicatorResponse">
+        <xs:sequence>
+            <xs:element name="Indicator" type="tns:Indicator" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Indicator">
+        <xs:sequence>
+            <xs:element name="Colors">
+                <xs:simpleType>
+                    <xs:list itemType="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="FlashAbilities">
+                <xs:simpleType>
+                    <xs:list itemType="tns:FlashAbilities"/>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="CurrentColor" type="xs:string"/>
+            <xs:element name="CurrentState" type="tns:State"/>
+            <xs:element name="CurrentFlashState" type="tns:FlashAbilities"/>
+        </xs:sequence>
+        <xs:attribute name="indicatorToken" type="xs:int" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="GetIndicators">
+        <xs:sequence/>
+    </xs:complexType>
+    <xs:complexType name="GetIndicatorsResponse">
+        <xs:sequence>
+            <xs:element name="Indicators" type="tns:Indicator" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SetIndicator">
+        <xs:sequence>
+            <xs:element name="IndicatorConfig" type="tns:IndicatorConfig"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IndicatorConfig">
+        <xs:sequence>
+            <xs:element name="Color" type="xs:string"/>
+            <xs:element name="State" type="tns:State"/>
+            <xs:element name="FlashState" type="tns:FlashAbilities"/>
+        </xs:sequence>
+        <xs:attribute name="indicatorToken" type="xs:int" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="SetIndicatorResponse">
+        <xs:sequence/>
+    </xs:complexType>
+    <xs:simpleType name="FlashAbilities">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NoFlash"/>
+            <xs:enumeration value="Flash"/>
+            <xs:enumeration value="FlashFast"/>
+            <xs:enumeration value="FlashAlternating"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="State">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="On"/>
+            <xs:enumeration value="Off"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../../../ver20/util/onvif-wsdl-viewer.xsl"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+                  targetNamespace="http://www.onvif.org/ver10/device/wsdl">
+    <wsdl:documentation>
+        Service: DeadmanSwitchService
+        Version: 1.0
+        Owner: Eagle Eye Networks
+    </wsdl:documentation>
+    <wsdl:types>
+        <xs:schema targetNamespace="http://www.onvif.org/ver10/device/wsdl" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" elementFormDefault="qualified" version="17.06">
+            <!--===============================-->
+            <xs:element name="GetSystemRebootCapabilities">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetSystemRebootCapabilitiesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Capabilities" type="tds:CapabilitiesType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="CapabilitiesType">
+                <xs:sequence>
+                    <xs:element name="SetSystemReboot" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Indicates whether a future reboot can be set or not with a SetSystemReboot request.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <!--===============================-->
+            <xs:element name="SetSystemReboot">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RebootTime" type="tds:FutureRebootTime">
+                            <xs:annotation>
+                                <xs:documentation>Day and time of the future reboot.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetSystemRebootResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Message" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Contains the reboot message sent by the device.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!--===============================-->
+            <xs:complexType name="FutureRebootTime">
+                <xs:sequence>
+                    <xs:element name="RebootDay" type="xs:int">
+                        <xs:annotation>
+                            <xs:documentation>Day of the reboot. Values are [0-6], representing	[Sun-Sat].
+                                The reboot never happens if the value is -1. The reboot happens every day if the value is 7.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="RebootHour" type="xs:int">
+                        <xs:annotation>
+                            <xs:documentation>Hour of the reboot.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="RebootMinute" type="xs:int">
+                        <xs:annotation>
+                            <xs:documentation>Minute of the reboot.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:anyAttribute processContents="lax"/>
+            </xs:complexType>
+            <!--===============================-->
+            <xs:element name="GetSystemReboot">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetSystemRebootResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RebootDay" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    Day of the reboot. Values are [0-6], representing [Sun-Sat]. The reboot never happens if the value is -1.
+                                    The reboot happens every day if the value is 7.
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="RebootHour" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Hour of the reboot.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="RebootMinute" type="xs:int">
+                            <xs:annotation>
+                                <xs:documentation>Minute of the reboot.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!--===============================-->
+            <!--===============================-->
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="GetSystemRebootCapabilitiesRequest">
+        <wsdl:part name="parameters" element="tds:GetSystemRebootCapabilities"/>
+    </wsdl:message>
+    <wsdl:message name="GetSystemRebootCapabilitiesResponse">
+        <wsdl:part name="parameters" element="tds:GetSystemRebootCapabilitiesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetSystemRebootRequest">
+        <wsdl:part name="parameters" element="tds:SetSystemReboot"/>
+    </wsdl:message>
+    <wsdl:message name="SetSystemRebootResponse">
+        <wsdl:part name="parameters" element="tds:SetSystemRebootResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetSystemRebootRequest">
+        <wsdl:part name="parameters" element="tds:GetSystemReboot"/>
+    </wsdl:message>
+    <wsdl:message name="GetSystemRebootResponse">
+        <wsdl:part name="parameters" element="tds:GetSystemRebootResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="DeadmanSwitchDevice">
+        <wsdl:operation name="GetSystemRebootCapabilities">
+            <wsdl:documentation>
+                Returns the capabilities of the deadman switch service.
+            </wsdl:documentation>
+            <wsdl:input message="tds:GetSystemRebootCapabilitiesRequest"/>
+            <wsdl:output message="tds:GetSystemRebootCapabilitiesResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetSystemReboot">
+            <wsdl:documentation>
+                This operation sets the time in the future when the camera will be rebooted.
+                User can set a day of the week, hour and minute of the reboot. The user can also disable any
+                future reboots by setting the RebootDay to -1. The time needs to be in the same timezone as
+                the camera's internal time.
+            </wsdl:documentation>
+            <wsdl:input message="tds:SetSystemRebootRequest"/>
+            <wsdl:output message="tds:SetSystemRebootResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSystemReboot">
+            <wsdl:documentation>
+                This operation gets the time of the reboot scheduled into the future.
+            </wsdl:documentation>
+            <wsdl:input message="tds:GetSystemRebootRequest"/>
+            <wsdl:output message="tds:GetSystemRebootResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="DeadmanSwitchBinding" type="tds:DeadmanSwitchDevice">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetSystemRebootCapabilities">
+            <soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetSystemRebootCapabilities"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetSystemReboot">
+            <soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SetSystemReboot"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetSystemReboot">
+            <soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetSystemReboot"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <!--===============================-->
+    <!--===============================-->
+    <wsdl:service name="DeadmanSwitchService">
+        <wsdl:port name="DeadmanSwitchPort" binding="tds:DeadmanSwitchBinding"/>
+    </wsdl:service>
+</wsdl:definitions>

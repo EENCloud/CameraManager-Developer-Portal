@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:tns="http://een.com/ver10/batterystatus/wsdl"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+           targetNamespace="http://een.com/ver10/batterystatus/wsdl">
+    <xs:element name="GetBatteryStatus" type="tns:GetBatteryStatus"/>
+    <xs:element name="GetBatteryStatusResponse" type="tns:GetBatteryStatusResponse"/>
+    <xs:complexType name="GetBatteryStatus">
+        <xs:sequence/>
+    </xs:complexType>
+    <xs:complexType name="GetBatteryStatusResponse">
+        <xs:sequence>
+            <xs:element name="BatteryStatus" type="tns:BatteryStatus"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BatteryStatus">
+        <xs:sequence>
+            <xs:element name="PercentCharged" type="xs:int" minOccurs="0"/>
+            <xs:element name="RemainingChargeMinutes" type="xs:int" minOccurs="0"/>
+            <xs:element name="BatteryMounted" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

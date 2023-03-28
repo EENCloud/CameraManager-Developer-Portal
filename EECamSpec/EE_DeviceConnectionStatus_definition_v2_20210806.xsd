@@ -1,0 +1,325 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.3 git-revision#b4c5bb6. -->
+<xs:schema xmlns:tns="http://een.com/ver10/deviceconnectionstatus/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://een.com/ver10/deviceconnectionstatus/wsdl">
+
+<xs:element name="GetBluetoothDeviceStatus" type="tns:GetBluetoothDeviceStatus"/>
+
+<xs:element name="GetBluetoothDeviceStatusResponse" type="tns:GetBluetoothDeviceStatusResponse"/>
+
+<xs:element name="GetBluetoothDevices" type="tns:GetBluetoothDevices"/>
+
+<xs:element name="GetBluetoothDevicesResponse" type="tns:GetBluetoothDevicesResponse"/>
+
+<xs:element name="GetGpsReceivers" type="tns:GetGpsReceivers"/>
+
+<xs:element name="GetGpsReceiversResponse" type="tns:GetGpsReceiversResponse"/>
+
+<xs:element name="GetMobileCarrierDetails" type="tns:GetMobileCarrierDetails"/>
+
+<xs:element name="GetMobileCarrierDetailsResponse" type="tns:GetMobileCarrierDetailsResponse"/>
+
+<xs:element name="GetMobileCarriers" type="tns:GetMobileCarriers"/>
+
+<xs:element name="GetMobileCarriersResponse" type="tns:GetMobileCarriersResponse"/>
+
+<xs:element name="GetNetworkInterfacesStatus" type="tns:GetNetworkInterfacesStatus"/>
+
+<xs:element name="GetNetworkInterfacesStatusResponse" type="tns:GetNetworkInterfacesStatusResponse"/>
+
+<xs:element name="GetServiceCapabilities" type="tns:GetServiceCapabilities"/>
+
+<xs:element name="GetServiceCapabilitiesResponse" type="tns:GetServiceCapabilitiesResponse"/>
+
+<xs:element name="GetSimCardDetails" type="tns:GetSimCardDetails"/>
+
+<xs:element name="GetSimCardDetailsResponse" type="tns:GetSimCardDetailsResponse"/>
+
+<xs:element name="GetSimCardsDetails" type="tns:GetSimCardsDetails"/>
+
+<xs:element name="GetSimCardsDetailsResponse" type="tns:GetSimCardsDetailsResponse"/>
+
+<xs:element name="GetWwanInterfaceStatus" type="tns:GetWwanInterfaceStatus"/>
+
+<xs:element name="GetWwanInterfaceStatusResponse" type="tns:GetWwanInterfaceStatusResponse"/>
+
+<xs:element name="SetMobileCarrierDetails" type="tns:SetMobileCarrierDetails"/>
+
+<xs:element name="SetMobileCarrierDetailsResponse" type="tns:SetMobileCarrierDetailsResponse"/>
+
+<xs:element name="SetSimCardCarrierAndApn" type="tns:SetSimCardCarrierAndApn"/>
+
+<xs:element name="SetSimCardCarrierAndApnResponse" type="tns:SetSimCardCarrierAndApnResponse"/>
+
+<xs:complexType name="GetWwanInterfaceStatus">
+<xs:sequence>
+<xs:element name="WwanInterfaceToken" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetWwanInterfaceStatusResponse">
+<xs:sequence>
+<xs:element name="Status" type="tns:WwanStatus" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="WwanStatus">
+<xs:sequence>
+<xs:element name="Connected" type="xs:boolean"/>
+<xs:element name="SignalStrength" type="tns:SignalStrength" minOccurs="0"/>
+<xs:element name="NetworkType" type="tns:MobileNetworkType" minOccurs="0"/>
+<xs:element name="CarrierName" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetNetworkInterfacesStatus">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetNetworkInterfacesStatusResponse">
+<xs:sequence>
+<xs:element name="NetworkInterface" type="tns:NetworkInterface" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="NetworkInterface">
+<xs:sequence>
+<xs:element name="Connected" type="xs:boolean"/>
+<xs:element name="CurrentNetworkInterface" type="xs:boolean"/>
+<xs:element name="InterfaceType" type="xs:int"/>
+</xs:sequence>
+<xs:attribute name="InterfaceToken" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="GetGpsReceivers">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetGpsReceiversResponse">
+<xs:sequence>
+<xs:element name="GpsReceiver" type="tns:GpsReceiver" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GpsReceiver">
+<xs:sequence>
+<xs:element name="Enabled" type="xs:boolean"/>
+</xs:sequence>
+<xs:attribute name="GpsReceiverToken" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="GetMobileCarriers">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetMobileCarriersResponse">
+<xs:sequence>
+<xs:element name="Carrier" type="tns:MobileCarrier" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MobileCarrier">
+<xs:sequence>
+<xs:element name="Name" type="xs:string"/>
+<xs:element name="Mcc" type="xs:string"/>
+<xs:element name="Mnc" type="xs:string"/>
+</xs:sequence>
+<xs:attribute name="CarrierToken" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="SetSimCardCarrierAndApn">
+<xs:sequence>
+<xs:element name="SimCardToken" type="xs:string"/>
+<xs:element name="CarrierToken" type="xs:string"/>
+<xs:element name="SelectedApnName" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SetSimCardCarrierAndApnResponse">
+<xs:sequence>
+<xs:element name="SimCard" type="tns:SimCard"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SimCard">
+<xs:sequence>
+<xs:element name="Iccid" type="xs:string"/>
+<xs:element name="Imsi" type="xs:string" minOccurs="0"/>
+<xs:element name="Carrier" type="tns:MobileCarrier"/>
+<xs:element name="SelectedApn" type="tns:AccessPointName"/>
+</xs:sequence>
+<xs:attribute name="SimCardToken" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="AccessPointName">
+<xs:sequence>
+<xs:element name="Name" type="xs:string"/>
+<xs:element name="Apn" type="xs:string"/>
+<xs:element name="Proxy" type="xs:string" minOccurs="0"/>
+<xs:element name="Port" type="xs:int" minOccurs="0"/>
+<xs:element name="Username" type="xs:string"/>
+<xs:element name="Password" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetServiceCapabilities">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetServiceCapabilitiesResponse">
+<xs:sequence>
+<xs:element name="DeviceConnectionCapabilities" type="tns:DeviceConnectionCapabilities"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DeviceConnectionCapabilities" final="extension restriction">
+<xs:sequence/>
+<xs:attribute name="GpsSupported" type="xs:boolean" use="required"/>
+<xs:attribute name="BluetoothSupported" type="xs:boolean" use="required"/>
+<xs:attribute name="MobileSupported" type="xs:boolean" use="required"/>
+<xs:attribute name="SetMobileCarrierSupported" type="xs:boolean" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="GetBluetoothDevices">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetBluetoothDevicesResponse">
+<xs:sequence>
+<xs:element name="BluetoothDevice" type="tns:BluetoothDevice" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="BluetoothDevice">
+<xs:sequence>
+<xs:element name="Enabled" type="xs:boolean"/>
+<xs:element name="Info" type="tns:BluetoothInfo" minOccurs="0"/>
+</xs:sequence>
+<xs:attribute name="BluetoothDeviceToken" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="BluetoothInfo">
+<xs:sequence>
+<xs:element name="Name" type="xs:string" minOccurs="0"/>
+<xs:element name="HwAddress" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetBluetoothDeviceStatus">
+<xs:sequence>
+<xs:element name="BluetoothDeviceToken" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetBluetoothDeviceStatusResponse">
+<xs:sequence>
+<xs:element name="Status" type="tns:BluetoothStatus" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="BluetoothStatus">
+<xs:sequence>
+<xs:element name="Enabled" type="xs:boolean"/>
+<xs:element name="PairedWith" type="tns:PairedWith" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PairedWith">
+<xs:sequence>
+<xs:element name="Device" type="tns:Device" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Device">
+<xs:sequence>
+<xs:element name="Name" type="xs:string" minOccurs="0"/>
+<xs:element name="Connected" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetSimCardsDetails">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="GetSimCardsDetailsResponse">
+<xs:sequence>
+<xs:element name="SimCard" type="tns:SimCard" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SetMobileCarrierDetails">
+<xs:sequence>
+<xs:element name="CarrierDetails" type="tns:MobileCarrierDetails"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MobileCarrierDetails">
+<xs:complexContent>
+<xs:extension base="tns:MobileCarrier">
+<xs:sequence>
+<xs:element name="CountryIso" type="xs:string" minOccurs="0"/>
+<xs:element name="ApnsSupported">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="AccessPointName" type="tns:AccessPointName" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SetMobileCarrierDetailsResponse">
+<xs:sequence>
+<xs:element name="CarrierDetails" type="tns:MobileCarrierDetails"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetMobileCarrierDetails">
+<xs:sequence>
+<xs:element name="CarrierToken" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetMobileCarrierDetailsResponse">
+<xs:sequence>
+<xs:element name="CarrierDetails" type="tns:MobileCarrierDetails"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetSimCardDetails">
+<xs:sequence>
+<xs:element name="SimCardToken" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetSimCardDetailsResponse">
+<xs:sequence>
+<xs:element name="SimCard" type="tns:SimCard"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="SignalStrength">
+<xs:restriction base="xs:string">
+<xs:enumeration value="None"/>
+<xs:enumeration value="VeryBad"/>
+<xs:enumeration value="Bad"/>
+<xs:enumeration value="Good"/>
+<xs:enumeration value="VeryGood"/>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="MobileNetworkType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="gsm"/>
+<xs:enumeration value="gprs"/>
+<xs:enumeration value="edge"/>
+<xs:enumeration value="umts"/>
+<xs:enumeration value="hspa"/>
+<xs:enumeration value="hsdpa"/>
+<xs:enumeration value="lte"/>
+<xs:enumeration value="other"/>
+<xs:enumeration value="unknown"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

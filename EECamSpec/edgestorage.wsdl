@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:esns="http://een.com/wsdl/ver10/edgestorage"
+                  targetNamespace="http://een.com/wsdl/ver10/edgestorage">
+    <wsdl:documentation>
+        Service: EdgeStorageService
+        Version: 1.0
+        Owner: Eagle Eye Networks
+    </wsdl:documentation>
+    <wsdl:types>
+		<xs:schema targetNamespace="http://een.com/wsdl/ver10/edgestorage"
+                   xmlns:escs="http://een.com/wsdl/ver10/edgestorage/schema"
+                   xmlns:esns="http://een.com/wsdl/ver10/edgestorage" elementFormDefault="qualified">
+			<!-- import XSD -->
+			<xs:import namespace="http://een.com/wsdl/ver10/edgestorage/schema"
+                       schemaLocation="local/een.com/wsdl/ver10/edgestorage/schema/common.xsd"/>
+			<!--  Message Request/Responses elements  -->
+			<xs:element name="GetServiceCapabilities">
+				<xs:complexType>
+					<xs:sequence/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetServiceCapabilitiesResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Capabilities" type="escs:CapabilitiesType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+            <!--===============================-->
+            <xs:element name="GetEdgeStorageStatus">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetEdgeStorageStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="StorageLocations" type="escs:StorageLocationsType">
+                            <xs:annotation>
+                                <xs:documentation>The storage locations for the edge storage service is returned in the StorageLocation elements.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!--===============================-->
+            <xs:element name="FormatEdgeStorage">
+                <xs:annotation>
+                    <xs:documentation>Start the formatting of the edge storage of type SDCard.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="StorageName" type="escs:StorageNameType">
+                            <xs:annotation>
+                                <xs:documentation>The identifier of the storage to format</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!--===============================-->
+            <xs:element name="StartEdgeStorageEventRecording">
+                <xs:annotation>
+                    <xs:documentation>Start a one-off event recording.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="StorageName" type="escs:StorageNameType">
+                            <xs:annotation>
+                                <xs:documentation>The identifier of the storage where the event recording will be stored.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!--===============================-->
+            <xs:element name="GetEdgeStorageRecordingConfig">
+                <xs:annotation>
+                    <xs:documentation>Get the recording configuration of all device's edge storages.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetEdgeStorageRecordingConfigResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Configurations" type="escs:RecordingConfigTypeResults"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <!--===============================-->
+            <xs:element name="SetEdgeStorageRecordingConfig">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Configuration" type="escs:RecordingConfigType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetEdgeStorageRecordingConfigResponse">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="GetServiceCapabilitiesRequest">
+        <wsdl:part name="parameters" element="esns:GetServiceCapabilities"/>
+    </wsdl:message>
+    <wsdl:message name="GetServiceCapabilitiesResponse">
+        <wsdl:part name="parameters" element="esns:GetServiceCapabilitiesResponse"/>
+    </wsdl:message>
+    <!--===============================-->
+    <wsdl:message name="GetEdgeStorageStatusRequest">
+        <wsdl:part name="parameters" element="esns:GetEdgeStorageStatus"/>
+    </wsdl:message>
+    <wsdl:message name="GetEdgeStorageStatusResponse">
+        <wsdl:part name="parameters" element="esns:GetEdgeStorageStatusResponse"/>
+    </wsdl:message>
+    <!--===============================-->
+    <wsdl:message name="FormatEdgeStorageRequest">
+        <wsdl:part name="parameters" element="esns:FormatEdgeStorage"/>
+    </wsdl:message>
+    <!--===============================-->
+    <wsdl:message name="StartEdgeStorageEventRecordingRequest">
+        <wsdl:part name="parameters" element="esns:StartEdgeStorageEventRecording"/>
+    </wsdl:message>
+    <!--===============================-->
+    <wsdl:message name="GetEdgeStorageRecordingConfigRequest">
+        <wsdl:part name="parameters" element="esns:GetEdgeStorageRecordingConfig"/>
+    </wsdl:message>
+    <wsdl:message name="GetEdgeStorageRecordingConfigResponse">
+        <wsdl:part name="parameters" element="esns:GetEdgeStorageRecordingConfigResponse"/>
+    </wsdl:message>
+    <!--===============================-->
+    <wsdl:message name="SetEdgeStorageRecordingConfigRequest">
+        <wsdl:part name="parameters" element="esns:SetEdgeStorageRecordingConfig"/>
+    </wsdl:message>
+    <wsdl:message name="SetEdgeStorageRecordingConfigResponse">
+        <wsdl:part name="parameters" element="esns:SetEdgeStorageRecordingConfigResponse"/>
+    </wsdl:message>
+
+	<wsdl:portType name="EdgeStoragePort">
+		<!-- Operation: an abstract description of an action supported by the service -->
+		<wsdl:operation name="GetServiceCapabilities">
+            <wsdl:documentation>Returns the capabilities of the edge storage service.</wsdl:documentation>
+			<wsdl:input message="esns:GetServiceCapabilitiesRequest"/>
+			<wsdl:output message="esns:GetServiceCapabilitiesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetEdgeStorageStatus">
+			<wsdl:input message="esns:GetEdgeStorageStatusRequest"/>
+			<wsdl:output message="esns:GetEdgeStorageStatusResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="FormatEdgeStorage">
+            <wsdl:documentation>One way operation that triggers storage formatting if applicable.</wsdl:documentation>
+			<wsdl:input message="esns:FormatEdgeStorageRequest"/>
+        </wsdl:operation>
+		<wsdl:operation name="StartEdgeStorageEventRecording">
+            <wsdl:documentation>One way operation that triggers an event based recording.</wsdl:documentation>
+			<wsdl:input message="esns:StartEdgeStorageEventRecordingRequest"/>
+        </wsdl:operation>
+		<wsdl:operation name="GetEdgeStorageRecordingConfig">
+			<wsdl:input message="esns:GetEdgeStorageRecordingConfigRequest"/>
+            <wsdl:output message="esns:GetEdgeStorageRecordingConfigResponse"/>
+        </wsdl:operation>
+		<wsdl:operation name="SetEdgeStorageRecordingConfig">
+			<wsdl:input message="esns:SetEdgeStorageRecordingConfigRequest"/>
+            <wsdl:output message="esns:SetEdgeStorageRecordingConfigResponse"/>
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="EdgeStorageBinding" type="esns:EdgeStoragePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetServiceCapabilities">
+            <soap:operation soapAction="http://een.com/wsdl/ver10/edgestorage/GetServiceCapabilities"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+		<wsdl:operation name="GetEdgeStorageStatus">
+			<soap:operation soapAction="http://een.com/wsdl/ver10/edgestorage/GetEdgeStorageStatus"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="FormatEdgeStorage">
+			<soap:operation soapAction="http://een.com/wsdl/ver10/edgestorage/FormatEdgeStorage"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="StartEdgeStorageEventRecording">
+			<soap:operation soapAction="http://een.com/wsdl/ver10/edgestorage/StartEdgeStorageEventRecording"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="GetEdgeStorageRecordingConfig">
+			<soap:operation soapAction="http://een.com/wsdl/ver10/edgestorage/GetEdgeStorageRecordingConfig"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEdgeStorageRecordingConfig">
+			<soap:operation soapAction="http://een.com/wsdl/ver10/edgestorage/SetEdgeStorageRecordingConfig"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+    <!--===============================-->
+    <!--===============================-->
+    <wsdl:service name="EdgeStorageManagementService">
+        <wsdl:port name="EdgeStoragePort" binding="esns:EdgeStorageBinding"/>
+    </wsdl:service>
+</wsdl:definitions>
