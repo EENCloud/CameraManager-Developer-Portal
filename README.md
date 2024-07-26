@@ -1,4 +1,4 @@
-# CameraManager-Developer-Portal
+# CameraManager Developer Portal
 Repository hosting files for the CameraManager Developer Portal
 
 This is the public repo for Eagle Eye CameraManager public SDK's. 
